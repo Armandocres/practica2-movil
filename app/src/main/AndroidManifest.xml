@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Practica2">
         <activity
+            android:name=".UI.FormularioActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

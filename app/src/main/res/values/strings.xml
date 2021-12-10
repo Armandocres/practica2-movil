@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">practica-2</string>
     <string name="buscar_clinica">Buscar Clinica</string>
+    <string name="clinica">Tipo de Clinica</string>
+    <string name="lugar">INgresa el lugar de la Clinica</string>
+    <string name="contacto">Ingresa el numero</string>
+    <string name="guardar">Guardar clinica</string>
 </resources>
