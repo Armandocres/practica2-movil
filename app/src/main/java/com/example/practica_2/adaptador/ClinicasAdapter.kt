@@ -1,11 +1,14 @@
 package com.example.practica_2.adaptador
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.practica_2.R
+import com.example.practica_2.UI.FormularioActivity
+import com.example.practica_2.config.Constantes
 import com.example.practica_2.databinding.ItemListBinding
 import com.example.practica_2.models.Clinicas
 
@@ -43,6 +46,13 @@ class ClinicasAdapter(private val dataSet: List<Clinicas>?) :
             binding.tvTipoInstitute.text = "${clinicas.tipo} ${clinicas.idClinica}"
             binding.TvContacto.text = clinicas.contacto
             binding.tvLugar.text = clinicas.lugar
+
+            binding.root.setOnClickListener {
+                val intent = Intent(context,FormularioActivity::class.java)
+                intent.putExtra(Constantes.OPERACION_KEY,Constantes.OPERACION_EDITAR)
+                intent.putExtra(Constantes.ID_CLINICA_KEY, clinicas.idClinica)
+                context.startActivity(intent)
+            }
         }
     }
 

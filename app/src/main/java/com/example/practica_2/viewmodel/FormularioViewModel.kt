@@ -24,21 +24,60 @@ class FormularioViewModel:ViewModel() {
     }
 
     fun guardarUsuario() {
-        var mClinicas = Clinicas(0, clinica.value!!, lugar.value!!, numero.value!!)
-        when(operacion){
-            Constantes.OPERACION_INSERTAR->{
-              viewModelScope.launch {
-                  val result = withContext(Dispatchers.IO){
-                      db.clinicasDao().insert(
-                          arrayListOf<Clinicas>(mClinicas)
-                      )
-                  }
-                  operacionExitosa.value = result.isNotEmpty()
-              }
-            }
-            Constantes.OPERACION_EDITAR->{
+        if (validarInformacion()){
+            var mClinicas = Clinicas(0, clinica.value!!, lugar.value!!, numero.value!!)
+            when(operacion){
+                Constantes.OPERACION_INSERTAR->{
+                    viewModelScope.launch {
+                        val result = withContext(Dispatchers.IO){
+                            db.clinicasDao().insert(
+                                arrayListOf<Clinicas>(mClinicas)
+                            )
+                        }
+                        operacionExitosa.value = result.isNotEmpty()
+                    }
+                }
+                Constantes.OPERACION_EDITAR->{
+                    mClinicas.idClinica = id.value!!
+                    viewModelScope.launch {
+                        val result = withContext(Dispatchers.IO) {
+                            db.clinicasDao().updated(mClinicas)
+                        }
 
+                        operacionExitosa.value = (result > 0)
+                    }
+
+                }
             }
+        } else {
+            operacionExitosa.value = false
+        }
+    }
+
+    fun cargarDatos() {
+        viewModelScope.launch {
+            var clinick = withContext(Dispatchers.IO) {
+                db.clinicasDao().getById(id.value!!)
+            }
+            clinica.value = clinick.tipo
+            lugar.value = clinick.lugar
+            numero.value = clinick.contacto
+
+        }
+    }
+
+    private fun validarInformacion():Boolean {
+        //devuelve true si la informacion no es nula ni vacia
+        return !(clinica.value.isNullOrEmpty() || lugar.value.isNullOrEmpty() || numero.value.isNullOrEmpty())
+    }
+
+    fun eliminarClinica() {
+        var mClinicas = Clinicas(id.value!!, "", "", "")
+        viewModelScope.launch {
+            var result = withContext(Dispatchers.IO) {
+                db.clinicasDao().delete(mClinicas)
+            }
+            operacionExitosa.value = (result > 0)
         }
     }
 }

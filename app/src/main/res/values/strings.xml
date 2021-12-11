@@ -5,4 +5,8 @@
     <string name="lugar">INgresa el lugar de la Clinica</string>
     <string name="contacto">Ingresa el numero</string>
     <string name="guardar">Guardar clinica</string>
+    <string name="borrar">Borrar</string>
+    <string name="borrar_clinica">¿Estás seguro de borrar la clinica?</string>
+    <string name="yes">Si, Borrar</string>
+    <string name="cancelar">Cancelar</string>
 </resources>
